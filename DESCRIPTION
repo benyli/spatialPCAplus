@@ -1,0 +1,19 @@
+Package: SpatialPCAplus
+Title: Spatial PCA with NNGP approximation
+Version: 0.0.0.9000
+Authors@R: 
+    person("Yiren", "Hou", , "yirenhou@umich.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package provides Nearest Neighborhood Gaussian Process function to approximate inverse of kernel matrix K defined from the underlying latent factor model in Spatial PCA. It also provides functions to estimate loading matrix W and latent factor matrix Z by integrating output (K inverse, determinant of K) approximated by Nearest Neighborhood Gaussian Process.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+        license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: methods, MASS, Matrix, RSpectra, Rtsne, Seurat, parallel,
+        pdist, tidyr, umap, ggplot2, dplyr, assertthat, foreach
+NeedsCompilation: no
+Packaged: 2023-12-03 20:35:53 UTC; yirenhou
+Author: Yiren Hou [aut, cre] (YOUR-ORCID-ID)
+Maintainer: Yiren Hou <yirenhou@umich.edu>
+Depends: R (>= 3.5.0)
