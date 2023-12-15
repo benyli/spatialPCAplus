@@ -21,12 +21,6 @@ SpatialPCA_SpatialPCs_NNGP(
 \item{eigenvecnum}{When fast=TRUE, eigenvecnum is the number of top eigenvectors and eigenvalues to be used in low-rank approximation in the eigen decomposition step for kernel matrix.
 The default is NULL, if specified, it is recommended that these top eigen values explain >=90\% of the variance.
 In estimating spatial PCs, we need larger number of eigenvectors in kernel matrix for more accurate estimation.}
-
-\item{sigma_inverse}{inverse of kernel K}
-
-\item{sigma_inverse_det}{determinant of inverse K}
-
-\item{sigma_det}{determinant of kernel K}
 }
 \value{
 Returns SpatialPCA object with estimated Spatial PCs.

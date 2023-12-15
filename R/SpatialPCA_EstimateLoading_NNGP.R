@@ -1,21 +1,16 @@
-
-########################################################################################################################
-# Package: SpatialPCAplus
-# Version: 0.0.9
-# Date   : 2023-12-02
-# Title : Spatial PCA with NNGP approximation
-# Authors: Y. Hou
-# Contacts: yirenhou@umich.edu
-#          University of Michigan, Department of Biostatistics
-####################################################################################################
-
+#Use approximated K inverse to estimate loading matrix Z
+#
+#
+#
+#
+#
 ########################################################################################################################
 # Package: SpatialPCA
 # Version: 1.1.0
 # Date   : 2021-10-27
-# Title : Spatially Aware Dimension Reduction for Spatial Transcriptomics 
+# Title : Spatially Aware Dimension Reduction for Spatial Transcriptomics
 # Authors: L. Shang and X. Zhou
-# Contacts: shanglu@umich.edu 
+# Contacts: shanglu@umich.edu
 #          University of Michigan, Department of Biostatistics
 ####################################################################################################
 
@@ -29,9 +24,6 @@
 #' @param eigenvecnum When fast=TRUE, eigenvecnum is the number of top eigenvectors and eigenvalues to be used in low-rank approximation in the eigen decomposition step for kernel matrix.
 #' The default is NULL, if specified, it is recommended to use eigenvecnum=20 when sample size is large (e.g. >5,000). When sample size is small, eigenvecnum is suggested to explain at least 90% variance.
 #' @param SpatialPCnum Number of spatial PCs.
-#' @param sigma_inverse inverse of kernel K
-#' @param sigma_inverse_det determinant of inverse K
-#' @param sigma_det determinant of kernel K
 #' 
 #' @return Returns SpatialPCA object with estimated loading matrix W.
 #'
@@ -73,9 +65,6 @@ SpatialPCA_EstimateLoading_NNGP = function(object, maxiter=300,initial_tau=1,fas
   }
   
   
- 
-  
-  
   object@params$MYt = object@params$M %*% t(object@params$expr)
   object@params$YMMYt = object@params$YM %*% object@params$MYt
   object@params$Xt = t(object@params$H)
@@ -90,7 +79,7 @@ SpatialPCA_EstimateLoading_NNGP = function(object, maxiter=300,initial_tau=1,fas
   q=object@params$q
  
  
-  G_each = object@params$YMMYt - object@params$YM %*% solve(object@params$M + (1/object@tau * sigma_inverse)) %*% object@params$MYt
+  G_each = object@params$YM %*% solve(object@params$M + (1/object@tau * sigma_inverse)) %*% object@params$MYt
   object@W = eigs_sym(G_each, k=SpatialPCnum, which = "LM")$vectors
   object@sigma2_0 = as.numeric((object@params$tr_YMY+F_funct_sameG(object@W,G_each))/(k*(n-q)))
 
@@ -108,18 +97,17 @@ SpatialPCA_estimate_parameter_NNGP = function(param_ini, params){
   q=object@params$q
   PCnum=object@params$SpatialPCnum
 
-  G_each = object@params$YMMYt - object@params$YM %*% solve(object@params$M + (1/tau * sigma_inverse)) %*% object@params$MYt
+  G_each = object@params$YM %*% solve(object@params$M + (1/tau * as(sigma_inverse,"sparseMatrix"))) %*% object@params$MYt
   
   log_det_tauK_I = log(tau*sigma_det + object@params$n*1)
  
-  Xt_invmiddle_X = object@params$Xt%*%solve(diag(object@params$n) + tau * sigma_inverse)%*% object@params$H
+  Xt_invmiddle_X = object@params$Xt%*%solve(diag(object@params$n) + tau * object@kernelmat)%*% object@params$H
   
   log_det_Xt_inv_X = determinant(Xt_invmiddle_X, logarithm=TRUE)$modulus[1]
   
   sum_det=0
   
   sum_det=sum_det+(0.5*log_det_tauK_I+0.5*log_det_Xt_inv_X  )*PCnum
-  
   
   W_est_here = eigs_sym(G_each, k=PCnum, which = "LM")$vectors
   -(-sum_det -(k*(n-q))/2*log(object@params$tr_YMY+F_funct_sameG(W_est_here,G_each)))

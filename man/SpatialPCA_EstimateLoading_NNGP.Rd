@@ -29,12 +29,6 @@ SpatialPCA_EstimateLoading_NNGP(
 The default is NULL, if specified, it is recommended to use eigenvecnum=20 when sample size is large (e.g. >5,000). When sample size is small, eigenvecnum is suggested to explain at least 90\% variance.}
 
 \item{SpatialPCnum}{Number of spatial PCs.}
-
-\item{sigma_inverse}{inverse of kernel K}
-
-\item{sigma_inverse_det}{determinant of inverse K}
-
-\item{sigma_det}{determinant of kernel K}
 }
 \value{
 Returns SpatialPCA object with estimated loading matrix W.

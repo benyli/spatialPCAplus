@@ -1,15 +1,4 @@
 ########################################################################################################################
-# Package: SpatialPCAplus
-# Version: 0.0.9
-# Date   : 2023-12-02
-# Title : Spatial PCA with NNGP approximation
-# Authors: Y. Hou
-# Contacts: yirenhou@umich.edu
-#          University of Michigan, Department of Biostatistics
-####################################################################################################
-
-
-########################################################################################################################
 # Package: SpatialPCA
 # Version: 1.1.0
 # Date   : 2021-10-27
@@ -26,9 +15,6 @@
 #' @param eigenvecnum When fast=TRUE, eigenvecnum is the number of top eigenvectors and eigenvalues to be used in low-rank approximation in the eigen decomposition step for kernel matrix. 
 #' The default is NULL, if specified, it is recommended that these top eigen values explain >=90% of the variance. 
 #' In estimating spatial PCs, we need larger number of eigenvectors in kernel matrix for more accurate estimation.
-#' @param sigma_inverse inverse of kernel K
-#' @param sigma_inverse_det determinant of inverse K
-#' @param sigma_det determinant of kernel K
 #' @return Returns SpatialPCA object with estimated Spatial PCs.
 #' 
 #' @import RSpectra
